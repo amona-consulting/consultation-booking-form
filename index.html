@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Book a Free Consultation</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="./index.css">
+  <script src="./index.js" defer></script>
+</head>
+
+<body>
+  <div class="card">
+    <div class="card-header">
+      <h1>Book a free<br /><em>consultation</em></h1>
+      <div class="divider"></div>
+      <p style="margin-top: 14px;">Tell us a little about your situation and we'll be in touch.</p>
+    </div>
+
+    <form id="consultForm" onsubmit="handleSubmit(event)" novalidate>
+
+      <!-- Name -->
+      <div class="field-group">
+        <div class="name-row">
+          <div>
+            <label for="firstName">First name</label>
+            <input type="text" id="firstName" name="firstName" placeholder="Ada" required />
+          </div>
+          <div>
+            <label for="lastName">Last name</label>
+            <input type="text" id="lastName" name="lastName" placeholder="Lovelace" required />
+          </div>
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div class="field-group">
+        <label for="email">Email address</label>
+        <input type="email" id="email" name="email" placeholder="ada@example.com" required />
+      </div>
+
+      <!-- Phone -->
+      <div class="field-group">
+        <label for="phone">Phone number <span style="color:var(--muted);font-weight:300">(optional)</span></label>
+        <input type="tel" id="phone" name="phone" placeholder="+234 800 000 0000" />
+      </div>
+
+      <hr class="section-rule" />
+
+      <!-- Area of help -->
+      <div class="field-group">
+        <div class="field-label">What area do you need help with?</div>
+        <div class="check-group">
+          <label class="check-item">
+            <input type="checkbox" name="area" value="business_strategy" />
+            <span>Business strategy &amp; growth</span>
+          </label>
+          <label class="check-item">
+            <input type="checkbox" name="area" value="operations" />
+            <span>Operations &amp; process improvement</span>
+          </label>
+          <label class="check-item">
+            <input type="checkbox" name="area" value="other" />
+            <span>Something else</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Situation -->
+      <div class="field-group">
+        <label for="situation">Briefly describe your situation</label>
+        <textarea id="situation" name="situation"
+          placeholder="Share a bit about what you're working through…"></textarea>
+      </div>
+
+      <!-- Urgency -->
+      <div class="field-group">
+        <div class="field-label">How urgent is this?</div>
+        <div class="radio-group">
+          <label class="radio-item">
+            <input type="radio" name="urgency" value="exploring" />
+            <span>Just exploring</span>
+          </label>
+          <label class="radio-item">
+            <input type="radio" name="urgency" value="3_months" />
+            <span>Within 3 months</span>
+          </label>
+          <label class="radio-item">
+            <input type="radio" name="urgency" value="asap" />
+            <span>As soon as possible</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- How did you hear -->
+      <div class="field-group">
+        <label for="referral">How did you hear about us?</label>
+        <input type="text" id="referral" name="referral" placeholder="Google, referral, social media…" />
+      </div>
+
+      <!-- Company & Role -->
+      <div class="field-group">
+        <div class="name-row">
+          <div>
+            <label for="company">Company name</label>
+            <input type="text" id="company" name="company" placeholder="Acme Ltd" />
+          </div>
+          <div>
+            <label for="role">Your role</label>
+            <input type="text" id="role" name="role" placeholder="CEO, Manager2026" />
+          </div>
+        </div>
+      </div>
+
+      <hr class="section-rule" />
+
+      <!-- Book consultation -->
+      <div class="field-group">
+        <div class="field-label">Would you like to book a free consultation?</div>
+        <div class="radio-group">
+          <label class="radio-item">
+            <input type="radio" name="book" value="yes" onchange="toggleBooking(this)" />
+            <span>Yes, book me in</span>
+          </label>
+          <label class="radio-item">
+            <input type="radio" name="book" value="no" onchange="toggleBooking(this)" />
+            <span>Not yet — just browsing</span>
+          </label>
+        </div>
+
+        <!-- Conditional date/time -->
+        <div class="conditional-fields" id="bookingFields">
+          <div>
+            <label for="bookingDate">What day would you be free?</label>
+            <input type="date" id="bookingDate" name="bookingDate" />
+          </div>
+          <div>
+            <label for="bookingTime">Preferred time <span style="color:var(--muted);font-weight:300">(e.g. 9:00 AM, 2:00
+                PM)</span></label>
+            <input type="text" id="bookingTime" name="bookingTime" placeholder="e.g. 10:00 AM" />
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" class="submit-btn">Submit</button>
+    </form>
+  </div>
+</body>
+
+</html>
