@@ -12,6 +12,8 @@ function toggleBooking(radio) {
         dateInput.value = '';
         timeSelect.innerHTML = '<option value="">Select a time</option>';
         timeSelect.disabled = true;
+      } else {
+        setBookingDateMin();
       }
     }
 
@@ -25,6 +27,34 @@ function toggleBooking(radio) {
       6: [],
     };
 
+    function getTodayDateString() {
+      const today = new Date();
+      const year = today.getFullYear();
+      const month = String(today.getMonth() + 1).padStart(2, '0');
+      const day = String(today.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    }
+
+    function parseSlotDate(dateValue, slot) {
+      const [time, period] = slot.split(' ');
+      const [hours, minutes] = time.split(':').map(Number);
+      let hour = hours % 12;
+      if (period.toUpperCase() === 'PM') {
+        hour += 12;
+      }
+      const [year, month, day] = dateValue.split('-').map(Number);
+      return new Date(year, month - 1, day, hour, minutes, 0, 0);
+    }
+
+    function setBookingDateMin() {
+      const dateInput = document.getElementById('bookingDate');
+      const minDate = getTodayDateString();
+      dateInput.min = minDate;
+      if (dateInput.value && dateInput.value < minDate) {
+        dateInput.value = minDate;
+      }
+    }
+
     function populateTimeOptions() {
       const dateInput = document.getElementById('bookingDate');
       const timeSelect = document.getElementById('bookingTime');
@@ -37,8 +67,23 @@ function toggleBooking(radio) {
         return;
       }
 
+      setBookingDateMin();
+      const todayString = getTodayDateString();
       const weekday = new Date(dateValue).getDay();
-      const slots = availableTimesByWeekday[weekday] || [];
+      let slots = availableTimesByWeekday[weekday] || [];
+
+      if (dateValue < todayString) {
+        const option = document.createElement('option');
+        option.value = '';
+        option.textContent = 'Selected date is in the past';
+        timeSelect.appendChild(option);
+        return;
+      }
+
+      if (dateValue === todayString) {
+        const now = new Date();
+        slots = slots.filter(slot => parseSlotDate(dateValue, slot) > now);
+      }
 
       if (slots.length > 0) {
         slots.forEach(slot => {
@@ -51,7 +96,7 @@ function toggleBooking(radio) {
       } else {
         const option = document.createElement('option');
         option.value = '';
-        option.textContent = 'No available times for this day';
+        option.textContent = dateValue === todayString ? 'No remaining times today' : 'No available times for this day';
         timeSelect.appendChild(option);
         timeSelect.disabled = true;
       }
@@ -104,3 +149,5 @@ function toggleBooking(radio) {
         btn.disabled = false;
       }
     }
+
+    document.addEventListener('DOMContentLoaded', setBookingDateMin);
