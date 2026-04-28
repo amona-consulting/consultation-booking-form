@@ -138,12 +138,13 @@
         <div class="conditional-fields" id="bookingFields">
           <div>
             <label for="bookingDate">What day would you be free?</label>
-            <input type="date" id="bookingDate" name="bookingDate" />
+            <input type="date" id="bookingDate" name="bookingDate" onchange="populateTimeOptions()" />
           </div>
           <div>
-            <label for="bookingTime">Preferred time <span style="color:var(--muted);font-weight:300">(e.g. 9:00 AM, 2:00
-                PM)</span></label>
-            <input type="text" id="bookingTime" name="bookingTime" placeholder="e.g. 10:00 AM" />
+            <label for="bookingTime">Preferred time <span style="color:var(--muted);font-weight:300">(available slots depend on the day)</span></label>
+            <select id="bookingTime" name="bookingTime" disabled>
+              <option value="">Select a time</option>
+            </select>
           </div>
         </div>
       </div>
